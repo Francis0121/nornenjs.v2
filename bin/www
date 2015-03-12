@@ -88,10 +88,17 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
+var fs = require('fs');
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
     console.log(data);
   });
+
+  fs.readFile('/home/pi/git/nornenjs.v2/bin/image.png', function(err, buf){
+    console.log(buf);
+    socket.emit('image', buf);
+  });
+
 });
